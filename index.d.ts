@@ -19,6 +19,17 @@ export type RegistryContentType =
 	| OpenMetricsContentType;
 
 /**
+ * Options for metrics serialization
+ */
+export interface MetricsOptions {
+	/**
+	 * Use worker thread for serialization to avoid blocking the main thread.
+	 * Defaults to false for backwards compatibility.
+	 */
+	useWorkerThreads?: boolean;
+}
+
+/**
  * Container for all registered metrics
  */
 export class Registry<
@@ -26,8 +37,9 @@ export class Registry<
 > {
 	/**
 	 * Get string representation for all metrics
+	 * @param options Optional configuration for metrics serialization
 	 */
-	metrics(): Promise<string>;
+	metrics(options?: MetricsOptions): Promise<string>;
 
 	/**
 	 * Remove all metrics from the registry
